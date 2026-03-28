@@ -97,13 +97,6 @@ expression {
         background-position: center;
     }
 
-    #mainH1 {
-        grid-area: "b";
-        place-self: center;
-        font-size: 100px;
-        color: var(--blue1);
-    }
-
     #descp {
         grid-area: "a";
         place-self: center;
@@ -152,11 +145,6 @@ expression {
     .textareaOptionButton {
         background-color: var(--gray1);
     }
-}
-
-#mainPageLink {
-    font-size: 30px;
-    color: var(--blue1);
 }
 
 .pageHeader #headerDiv {
