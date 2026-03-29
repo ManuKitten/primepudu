@@ -46,7 +46,7 @@ h1 {
     font-size: 52px;
     color: var(--black1);
 }
-p, a {
+p, a, li {
     margin: 0px;
     font-size: 19px;
     color: var(--black2);
@@ -160,10 +160,39 @@ expression {
     }
 }
 
-.pageHeader #headerDiv {
-    display: flex;
-    padding:18.5px;
-    border-bottom: 1px solid var(--gray1);
+.pageHeader {
+    li {
+        list-style: none;
+        font-size: 15px;
+        padding: 5px;
+        border-radius: 5px;
+        transition: 0.3s;
+    } li:hover {
+        background-color: var(--white3);
+        cursor: pointer;
+    }
+
+    ul {
+        padding-left: 0px;
+        margin: 0px;
+    }
+
+    #headerDiv {
+        display: flex;
+        padding: 18.5px;
+        border-bottom: 1px solid var(--gray1);
+        position: relative;
+    }
+    #userOptionsDiv {
+        display: none;
+        position: absolute;
+        right: 17px;
+        top: 60px;
+        background-color: var(--white1);
+        border: 1px solid var(--gray1);
+        border-radius: 10px;
+        padding: 10px;
+    }
 }
 
 .signInDiv {
@@ -207,4 +236,9 @@ expression {
     #contentDiv {
         padding: 100px;
     }
+}
+
+.clickableText:hover {
+    cursor: pointer;
+    user-select: none;
 }

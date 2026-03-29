@@ -13,10 +13,15 @@ function orderHeader(order) {
                                 <img src="${location}stock-images/primepudu.png" width="100">
                             </a>
                             <div class="signInDiv">
-                                <button id="signInButton" onclick="window.location.href = '${location}signin'">Sign In</button>
+                                <button id="signInButton" onclick="localStorage.setItem('previousUrl', '${window.location.pathname}'); window.location.href = '${location}signin';">Sign In</button>
                             </div>
                             <div id="signedDiv" class="signInDiv">
-                                <p>Username</p>
+                                <p class="clickableText" onclick="displayUserOptions()">Username</p>
+                            </div>
+                            <div id="userOptionsDiv">
+                                <ul id="userOptions">
+                                    <li onclick="logOut()">Log Out</li>
+                                </ul>
                             </div>
                         </div>`
     body.insertBefore(header, body.children[0]);
@@ -30,4 +35,20 @@ function orderHeader(order) {
         signedDivText.style.marginTop = "10px"
         signedDiv.style.display = "block";
     }
+}
+
+function displayUserOptions() {
+    const div = document.getElementById("userOptionsDiv");
+    if (div.style.display == "block") {
+        div.style.display = "none"
+    } else {
+        div.style.display = "block"
+    }
+}
+
+function logOut() {
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+    localStorage.removeItem("hashName");
+    location.reload()
 }

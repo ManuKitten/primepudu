@@ -53,7 +53,7 @@
                         localStorage.setItem("password", passwordInput);
                         localStorage.setItem("hashName", hashedUsername);
 
-                        window.location.href = "../";
+                        window.location.href = localStorage.getItem("previousUrl") || "..";
                     } else {
                         errorText.style.display = "block";
                         errorText.textContent = "Error: Password incorrect"
