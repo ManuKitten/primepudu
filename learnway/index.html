@@ -1,0 +1,24 @@
+<html lang="en">
+    <head>
+        <title>PrimePudu | Learnway</title>
+        <meta name="keywords" content="Math, Free, Pudu, Prime, PrimePudu, Primes, Pudus, Learn, Friendly, Fun, Learning">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../style.css">
+        <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    </head>
+    <body class="learnwayBody">
+        <div id="contentDiv">
+            <h1 id="lal">Learnway</h1>
+        </div>
+        <script src="../master.js"></script>
+        <script>
+            orderHeader(1);
+
+            if (localStorage.getItem("username")) {
+                document.getElementsByClassName("learnwayBody")[0].style.display = "block";
+            } else {
+                window.location.href = "../signin"
+            }
+        </script>
+    </body>
+</html>

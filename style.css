@@ -201,3 +201,10 @@ expression {
         margin-right: auto;
     }
 }
+
+.learnwayBody {
+    display: none;
+    #contentDiv {
+        padding: 100px;
+    }
+}
