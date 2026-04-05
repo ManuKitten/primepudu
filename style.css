@@ -318,6 +318,9 @@ expression {
         padding: 50px;
         border-radius: 50px;
         top: 6vw;
+        @media screen and (max-width: 800px) {
+            top: 18vw;
+        }
         width: 300px;
         left: calc(50% - 200px);
 
