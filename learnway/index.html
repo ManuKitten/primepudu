@@ -201,10 +201,12 @@
                     })
 
                     if (account.progress.individualSections[sectionName] && account.progress.individualSections[sectionName][i] != 4) {
-                        div.onclick = () => {
-                            alert(String(account.progress.individualSections[sectionName]))
+                        div.addEventListener("click", function() {
                             window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
-                        }
+                        })
+                        div.addEventListener("touchstart", function() {
+                            window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
+                        })
                     }
 
                     quizzesDiv.appendChild(div);
@@ -265,12 +267,6 @@
                 }
                 transitioned = !transitioned
             }
-
-            document.addEventListener("keydown", function (event) {
-                if (event.key === "k") {
-                    toggleWarning(0);
-                }
-            })
         })
     </script>
 </body>
