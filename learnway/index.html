@@ -119,9 +119,9 @@
 
                 const descDiv = document.createElement("div");
                 descDiv.id = "sectionDesc";
-                if (Object.keys(account.progress.individualSections).includes(section)) {
+                if (Object.keys(account.progress.individualSections).includes(sectionName)) {
                     if (section.lessonstheme != "") {
-                    descDiv.onclick = () => { window.location.href = "../learn/?lesson=" + section.lessonstheme; }
+                        descDiv.onclick = () => { window.location.href = "../learn/?lesson=" + section.lessonstheme; }
                     }
                 } else {
                     descDiv.onclick = () => {
@@ -200,6 +200,12 @@
                         }
                     })
 
+                    if (sectionName == "section000") {
+                        alert(String(account));
+                        alert(String(account.progress))
+                        alert(String(account.progress.individualSections));
+                        alert(String(account.progress.individualSections[sectionName]));
+                    }
                     if (account.progress.individualSections[sectionName] && account.progress.individualSections[sectionName][i] != 4) {
                         div.addEventListener("click", function() {
                             window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
