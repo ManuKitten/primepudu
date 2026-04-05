@@ -394,6 +394,9 @@ expression {
 
         #lessonElements {
             width: 600px;
+            @media screen and (max-width: 800px) {
+                width: 86.6vw;
+            }
             margin-left: auto;
             margin-right: auto;
             display: grid;
@@ -415,9 +418,6 @@ expression {
                     width: 10%;
                     border-radius: 6px;
                     height: 20px;
-                    @media screen and (max-width: 800px) {
-                        height: 30px;
-                    }
                     background-color: var(--gray1);
                     transition: 0.2s;
                 }
