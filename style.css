@@ -354,6 +354,10 @@ expression {
     .section { 
         padding-top: 6vw;
         padding-bottom: 6vw;
+        @media screen and (max-width: 800px) {
+            padding-top: 10vw;
+            padding-bottom: 10vw;
+        }
         border-bottom: 3px solid var(--gray2);
         border-radius: 2px;
 

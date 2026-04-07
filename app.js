@@ -109,4 +109,33 @@ app.post('/learn-section', async (req, res) => {
   }
 });
 
+app.post('/finish-section', async (req, res) => {
+  try {
+    const { accountId, sectionName } = req.body;
+
+    // 1. Define the path to the specific section to be removed
+    const sectionPath = `progress.individualSections.${sectionName}`;
+
+    const updatedAccount = await Account.findOneAndUpdate(
+      { accountId: accountId }, 
+      { 
+        // 2. Add the section name to the completed array
+        $addToSet: { "progress.completed": sectionName },
+        // 3. Remove the section from the individualSections object
+        $unset: { [sectionPath]: "" } 
+      },
+      { new: true }
+    );
+
+    if (!updatedAccount) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+
+    res.json(updatedAccount);
+  } catch (error) {
+    console.error("Server Error:", error);
+    res.status(500).send(error.message);
+  }
+});
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

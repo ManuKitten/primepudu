@@ -3,9 +3,7 @@
         "name": "Negative Numbers",
         "desc": "This section introduces negative numbers, their origin and the many uses they have.",
         "lessonstheme": "negative-numbers",
-        "color": "#2FD113",
-        "lightercolor": "#4FF335",
-        "colorlist": ["#8E918D", "#8FA68B", "#86B87B", "#67CC58", "#2FD113"],
+        "color": [24, 212, 176],
         "quizzes": [
             ["quizset0000", "quizset0001", "quizset0002", "quizset0003"],
             ["quizset0004", "quizset0005", "quizset0006", "quizset0007"],
@@ -17,9 +15,7 @@
         "name": "Fractions",
         "desc": "This section introduces fractions, how they were made, how they are better than division in most cases and how algebra uses them.",
         "lessonstheme": "",
-        "color": "#132FD1",
-        "lightercolor": "#354FF3",
-        "colorlist": ["#515769", "#4D577A", "#475491", "#3848A6", "#132FD1"],
+        "color": [43, 118, 224],
         "quizzes": [
             ["quizset0010", "quizset0011", "quizset0012", "quizset0013"],
             ["quizset0014", "quizset0015", "quizset0016", "quizset0017"],
@@ -31,9 +27,7 @@
         "name": "Sets",
         "desc": "This section introduces sets, how they work, how you can create your own and how they are fundamental in the axioms of math.",
         "lessonstheme": "",
-        "color": "#D1132F",
-        "lightercolor": "#F3354F",
-        "colorlist": ["#695157", "#7A4D57", "#914754", "#A63848", "#D1132F"],
+        "color": [129, 74, 230],
         "quizzes": [
             ["quizset0020", "quizset0021", "quizset0022", "quizset0023"],
             ["quizset0024", "quizset0025", "quizset0026", "quizset0027"],

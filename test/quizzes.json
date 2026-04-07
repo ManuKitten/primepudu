@@ -1,0 +1,24 @@
+{
+    "section000": [
+        ["45 - (-20)", "write", "65"],
+        ["45 x (-2)", "write", "-90"],
+        ["4 x (-3 + 2 x 5)", "write", "28"],
+        ["The temperature is 45°C and drops by 20°C. What is the new temperature?", "write", "25"],
+        ["38 + (-15)", "write", "23"],
+        ["-38 x 5", "write", "-190"],
+        ["6 x (-4 + 3 x 2)", "write", "12"],
+        ["A diver is at -60 meters and descends 5 meters. Where is the diver now?", "write", "-65"],
+        ["60 - 75", "write", "-15"],
+        ["60 / (-5)", "write", "-12"],
+        ["-2 x (5 + 6 x 3)", "write", "-46"],
+        ["You have 80 dollars and spend 95 dollars. What is your balance?", "write", "-15"],
+        ["72 - (-18)", "write", "90"],
+        ["-72 / (-8)", "write", "9"],
+        ["-3 x (2 + 5 x 4)", "write", "-66"],
+        ["A submarine is at -22 meters and rises 17 meters. What is its position?", "write", "-5"],
+        ["55 + (-30)", "write", "25"],
+        ["55 x (-3)", "write", "-165"],
+        ["12 / (-2 + 2 x 4)", "write", "2"],
+        ["You have 58 dollars and spend 100 dollars. What is your balance?", "write", "-42"]
+    ]
+}
