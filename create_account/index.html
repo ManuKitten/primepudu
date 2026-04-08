@@ -11,7 +11,7 @@
 <body class="signinTab" style="padding-top:78px;">
     <div id="mainGridDiv" style="gap:17px;">
         <a>
-            <img src="../stock-images/primepudu.png" width="300px" style="place-self: center;">
+            <img src="../images/primepudu.png" width="300px" style="place-self: center;">
         </a>
         <p>Create PrimePudu account</p>
         <form id="signInForm" style="text-align: left;">
@@ -37,14 +37,14 @@
                     accountData: data
                 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                window.location.href = "../learnway"; // Redirect after success
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    window.location.href = "../learnway"; // Redirect after success
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
 
         const form = document.getElementById("signInForm");

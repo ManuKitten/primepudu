@@ -15,7 +15,9 @@
     <div id="warningDialog">
         <div id="opt0" style="display: none;">
             <h2>Are you sure?</h2><br>
-            <p>In PrimePudu, you can learn as many things as you want at the same time. However, it is suggested that you don't learn many sections at the same time, so that you don't lose focus on learning. These are the sections you are currently learning:</p>
+            <p>In PrimePudu, you can learn as many things as you want at the same time. However, it is suggested that
+                you don't learn many sections at the same time, so that you don't lose focus on learning. These are the
+                sections you are currently learning:</p>
             <ul></ul>
             <p id="confQuestion">Do you still want to learn the section: ?</p>
             <div class="warningButtons">
@@ -25,7 +27,8 @@
         </div>
         <div id="opt1">
             <h2>Are you sure?</h2><br>
-            <p>Do you want to start this section? You can't close sections in PrimePudu, and it's ideal to finish them. Do you want to start this section?</p>
+            <p>Do you want to start this section? You can't close sections in PrimePudu, and it's ideal to finish them.
+                Do you want to start this section?</p>
             <br>
             <div class="warningButtons">
                 <p>Better not</p>
@@ -35,8 +38,6 @@
     </div>
     <script src="../master.js"></script>
     <script type="module">
-        orderHeader(1);
-
         function startLearningSection(sectionName) {
             const targetAccountId = localStorage.getItem("hashName");
 
@@ -50,19 +51,15 @@
                     sectionName: sectionName,
                 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                window.location.href = "../learnway"; // Redirect after success
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    window.location.href = "../learnway"; // Redirect after success
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
-
-        document.getElementsByTagName("header")[0].style.position = "sticky";
-        document.getElementsByTagName("header")[0].style.top = "0";
-        document.getElementsByTagName("header")[0].style.backgroundColor = "var(--white2)";
 
         if (localStorage.getItem("username")) {
             document.getElementsByClassName("learnwayBody")[0].style.display = "block";
@@ -89,23 +86,27 @@
 
         // Call it with your target ID
         await loadUserProgress(localStorage.getItem("hashName"));
+        orderHeader(1, account);
+        document.getElementsByTagName("header")[0].style.position = "sticky";
+        document.getElementsByTagName("header")[0].style.top = "0";
+        document.getElementsByTagName("header")[0].style.backgroundColor = "var(--white2)";
 
         fetch("sections.json").then(response => response.json()).then(sections => {
             let index = 0;
             function getColorStep(end, index, maxIndex) {
-                return ((end - 156) / maxIndex) * index + 156 
+                return ((end - 156) / maxIndex) * index + 156
             }
             Object.keys(sections).forEach(sectionName => {
                 if (!account.progress.completed.includes(sectionName)) {
                     const section = sections[sectionName]
                     if (Object.keys(account.progress.individualSections).includes(sectionName)) {
-                        const tr  = section.color;
+                        const tr = section.color;
                         var usableColor = `rgb(${Math.min(tr[0], 255)}, ${Math.min(tr[1], 255)}, ${Math.min(tr[2], 255)})`;
-                        var lightColor = `rgb(${Math.min(tr[0]+16, 255)}, ${Math.min(tr[1]+16, 255)}, ${Math.min(tr[2]+16, 255)})`;;
+                        var lightColor = `rgb(${Math.min(tr[0] + 16, 255)}, ${Math.min(tr[1] + 16, 255)}, ${Math.min(tr[2] + 16, 255)})`;;
                         var colorList = [];
                         for (let i = 0; i < 5; i++) {
-                            function gcs(a,b,c) {return getColorStep(a,b,c)}
-                            colorList.push(`rgb(${gcs(tr[0],i,4)}, ${gcs(tr[1],i,4)}, ${gcs(tr[2],i,4)})`);
+                            function gcs(a, b, c) { return getColorStep(a, b, c) }
+                            colorList.push(`rgb(${gcs(tr[0], i, 4)}, ${gcs(tr[1], i, 4)}, ${gcs(tr[2], i, 4)})`);
                         }
                     } else {
                         var usableColor = "#999999";
@@ -152,15 +153,15 @@
                                     ul.appendChild(li);
                                 }
                                 const opt = document.getElementById("opt0").getElementsByClassName("warningButtons")[0];
-                                opt.getElementsByTagName("p")[0].onclick = () => {toggleWarning(0)};
-                                opt.getElementsByTagName("p")[1].onclick = () => {startLearningSection(sectionName)};
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(0) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
 
                                 document.getElementById("confQuestion").textContent = `Do you still want to learn the section: ${section.name}?`
                             } else {
                                 toggleWarning(1);
                                 const opt = document.getElementById("opt1").getElementsByClassName("warningButtons")[0];
-                                opt.getElementsByTagName("p")[0].onclick = () => {toggleWarning(1)};
-                                opt.getElementsByTagName("p")[1].onclick = () => {startLearningSection(sectionName)};
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(1) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
                             }
                         }
                     }
@@ -190,7 +191,7 @@
                             div.style.backgroundColor = usableColor;
                         }
                         const img = document.createElement("img");
-                        img.src = `../stock-images/${figures[i % figures.length]}.png`;
+                        img.src = `../images/${figures[i % figures.length]}.png`;
                         img.style.userSelect = "none";
                         img.style.webkitUserDrag = "none";
                         div.appendChild(img);
@@ -207,7 +208,7 @@
                         })
 
                         if (account.progress.individualSections[sectionName] && account.progress.individualSections[sectionName][i] != 4) {
-                            div.addEventListener("click", function() {
+                            div.addEventListener("click", function () {
                                 window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
                             })
                         }
@@ -252,14 +253,14 @@
                     sectionDiv.appendChild(testDiv);
 
                     sectionsDiv.appendChild(sectionDiv);
-                    
+
                     index++;
                 }
             })
             Object.keys(sections).forEach(sectionName => {
                 if (account.progress.completed.includes(sectionName)) {
                     const section = sections[sectionName]
-                    
+
                     var usableColor = "#f2d200";
                     var lightColor = "#e6c600";
 
@@ -302,15 +303,15 @@
                                     ul.appendChild(li);
                                 }
                                 const opt = document.getElementById("opt0").getElementsByClassName("warningButtons")[0];
-                                opt.getElementsByTagName("p")[0].onclick = () => {toggleWarning(0)};
-                                opt.getElementsByTagName("p")[1].onclick = () => {startLearningSection(sectionName)};
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(0) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
 
                                 document.getElementById("confQuestion").textContent = `Do you still want to learn the section: ${section.name}?`
                             } else {
                                 toggleWarning(1);
                                 const opt = document.getElementById("opt1").getElementsByClassName("warningButtons")[0];
-                                opt.getElementsByTagName("p")[0].onclick = () => {toggleWarning(1)};
-                                opt.getElementsByTagName("p")[1].onclick = () => {startLearningSection(sectionName)};
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(1) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
                             }
                         }
                     }
@@ -332,7 +333,7 @@
                         const div = document.createElement("div");
                         div.style.backgroundColor = usableColor;
                         const img = document.createElement("img");
-                        img.src = `../stock-images/${figures[i % figures.length]}.png`;
+                        img.src = `../images/${figures[i % figures.length]}.png`;
                         img.style.userSelect = "none";
                         img.style.webkitUserDrag = "none";
                         div.appendChild(img);
@@ -345,7 +346,7 @@
                         })
 
                         if (account.progress.individualSections[sectionName] && account.progress.individualSections[sectionName][i] != 4) {
-                            div.addEventListener("click", function() {
+                            div.addEventListener("click", function () {
                                 window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
                             })
                         }
@@ -356,7 +357,7 @@
                     const testDiv = document.createElement("div");
                     testDiv.id = "sectionQuiz";
                     testDiv.innerHTML = `Take the quiz for: ${section.name}`;
-                    testDiv.style.backgroundColor = usableColor;                    
+                    testDiv.style.backgroundColor = usableColor;
                     testDiv.addEventListener("mouseover", function () {
                         let proceed = true;
                         for (let i = 0; i < 4; i++) {
@@ -382,7 +383,7 @@
                     sectionDiv.appendChild(testDiv);
 
                     sectionsDiv.appendChild(sectionDiv);
-                    
+
                     index++;
                 }
             })

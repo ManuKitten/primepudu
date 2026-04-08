@@ -138,4 +138,25 @@ app.post('/finish-section', async (req, res) => {
   }
 });
 
+app.post('/update-streak', async (req, res) => {
+  try {
+    const { accountId, newStreak } = req.body;
+
+    const updatedAccount = await Account.findOneAndUpdate(
+      { accountId: accountId }, 
+      { streak: newStreak },
+      { new: true }
+    );
+
+    if (!updatedAccount) {
+      return res.status(404).json({ error: "Account not found" });
+    }
+
+    res.json(updatedAccount);
+  } catch (error) {
+    console.error("Server Error:", error);
+    res.status(500).send(error.message);
+  }
+});
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

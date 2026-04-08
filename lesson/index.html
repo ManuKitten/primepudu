@@ -33,8 +33,31 @@
             </div>
         </div>
         <script src="../master.js"></script>
-        <script>
+        <script type="module">
             orderHeader(1);
+
+            function updateStreak(newStreak) {
+                const targetAccountId = localStorage.getItem("hashName");
+
+                fetch('/update-streak', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        accountId: targetAccountId,
+                        newStreak: newStreak,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    window.location.href = "../learnway"; // Redirect after success
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }
 
             function upgradeLessonsAndGo(newSectionData) {
                 const targetAccountId = localStorage.getItem("hashName");
@@ -53,12 +76,27 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Success:', data);
-                    window.location.href = "../learnway"; // Redirect after success
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
             }
+
+            let account;
+            async function loadUserProgress(accountId) {
+                try {
+                    const response = await fetch(`/get-account/${accountId}`);
+                    if (!response.ok) throw new Error('Account not found');
+                    const data = await response.json();
+                    // Example: Accessing the progress you just modified
+                    account = data;
+                    return data; // Return the data so await works properly
+                } catch (error) {
+                    console.error('Error:', error);
+                    throw error; // Re-throw so calling code knows it failed
+                }
+            }
+            await loadUserProgress(localStorage.getItem("hashName"));
 
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
@@ -154,7 +192,12 @@
                                     document.getElementById("lessonElements").style.opacity = "0";
                                     getSNLesson("quizset" + quizValue).then(value => {
                                         //console.log(value)
-                                        document.getElementById("continueButton").onclick = () => upgradeLessonsAndGo(value);
+                                        document.getElementById("continueButton").onclick = async () => {
+                                            await upgradeLessonsAndGo(value);
+                                            let streak = getRealStreakString(account.streak, account.creationDate)
+                                            streak = streak.slice(0, streak.length - 1) + "1"; 
+                                            updateStreak(streak);
+                                        };
                                     })
                                     setTimeout(function(){
                                         document.getElementById("lessonElements").style.display = "none";

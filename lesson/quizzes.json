@@ -190,5 +190,17 @@
         ["You have 90 dollars and lose 45 dollars. What remains?", "write", "45"],
         ["You have 58 dollars and spend 100 dollars. What is your balance?", "write", "-42"],
         ["You have 88 dollars and gain 10 dollars. What is your balance?", "write", "98"]
+    ],
+    "quizset0010": [
+        ["1", "write", "1"],
+        ["2", "write", "2"],
+        ["3", "write", "3"],
+        ["4", "write", "4"],
+        ["5", "write", "5"],
+        ["6", "write", "6"],
+        ["7", "write", "7"],
+        ["8", "write", "8"],
+        ["9", "write", "9"],
+        ["0", "write", "10"]
     ]
 }
