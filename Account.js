@@ -6,7 +6,9 @@ const accountSchema = new mongoose.Schema({
     progress: {
         completed: [String],
         individualSections: Object
-    }
+    },
+    streak: String,
+    creationDate: String,
 }, { strict: false } );
 
 module.exports = mongoose.model('Account', accountSchema);
