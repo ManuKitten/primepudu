@@ -8,7 +8,7 @@ const accountSchema = new mongoose.Schema({
         individualSections: Object
     },
     streak: String,
-    creationDate: String,
+    creationDate: String
 }, { strict: false } );
 
 module.exports = mongoose.model('Account', accountSchema);
