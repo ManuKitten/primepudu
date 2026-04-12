@@ -99,7 +99,7 @@ input:active {
 
 expression {
     font-family: "Computer Modern";
-    margin: 6px;
+    margin: 10px;
     margin-left: 20px;
     display: inline-block;
     width: auto;
@@ -196,6 +196,13 @@ expression {
     #mainContentDiv {
         padding: 100px;
         padding-top: 70px;
+        @media screen and (max-width: 800px) {
+            padding: 35px;
+
+            #content img {
+                width: 80%;
+            }
+        }
     }
 
     #writeTextarea {
@@ -208,6 +215,12 @@ expression {
 
     #textDiv {
         margin: 20px;
+        @media screen and (max-width: 800px) {
+            margin-left: 0px;
+            textarea {
+                width: 84vw;
+            }
+        }
         background-color: var(--white3);
         border-radius: 15px;
         display: inline-block;
@@ -215,6 +228,17 @@ expression {
 
     #textareaOptionsDiv {
         padding: 15px;
+        display: flex;
+        > * {
+            margin-right: 30px;
+        }
+        p {
+            margin-right: 0px;
+            margin-top: 14px;
+        }
+        input {
+            margin-right: 15px;  
+        }
     }
 
     .textareaOptionButton {

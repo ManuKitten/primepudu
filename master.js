@@ -1,3 +1,21 @@
+// Set MathJax config
+window.MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']], // Inline math delimiters
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] // Block math delimiters
+    },
+    svg: { 
+        fontCache: 'global',
+        scale: 1,
+    }
+};
+
+// Dynamically load MathJax
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+script.async = true;
+document.head.appendChild(script);
+
 function orderHeader(order, account = false) {
     // Creates a dynamic header and makes its paths work
 

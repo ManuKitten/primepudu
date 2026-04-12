@@ -35,9 +35,19 @@
             replaceContent();
         }
 
-        function replaceContent() {
+        async function replaceContent() {
             localStorage.setItem("writeTextMemory", textarea.value)
             document.getElementById("content").innerHTML = textarea.value;
+            const expressions = document.getElementsByTagName("expression");
+            for (let i = 0; i < expressions.length; i++) {
+                const element = expressions[i];
+                element.innerHTML = "$$" + element.innerHTML + "$$";
+            }
+            MathJax.typesetPromise([document.getElementById("mainContentDiv")]);
+            for (let i = 0; i < expressions.length; i++) {
+                const element = expressions[i];
+                element.children[0].style.margin = "7px";
+            }
         }
 
         async function copyTextarea() {

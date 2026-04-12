@@ -15,15 +15,27 @@
     <script src="../master.js"></script>
     <script>
         orderHeader(1);
-    </script>
-    <script>
+        document.getElementsByTagName("header")[0].style.position = "sticky";
+        document.getElementsByTagName("header")[0].style.top = "0";
+        document.getElementsByTagName("header")[0].style.backgroundColor = "var(--white2)";
+
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const lessonValue = urlParams.get('lesson');
 
-        fetch("lessons.json").then(response => response.json()).then(lessons => {
+        fetch("lessons.json").then(response => response.json()).then(async lessons => {
             document.getElementsByTagName("title")[0].innerHTML = "PrimePudu | " + lessons[lessonValue].name;
             document.getElementById("mainContentDiv").innerHTML = lessons[lessonValue].content;
+            const expressions = document.getElementsByTagName("expression");
+            for (let i = 0; i < expressions.length; i++) {
+                const element = expressions[i];
+                element.innerHTML = "$$" + element.innerHTML + "$$";
+            }
+            await MathJax.typesetPromise([document.getElementById("mainContentDiv")]);
+            for (let i = 0; i < expressions.length; i++) {
+                const element = expressions[i];
+                element.children[0].style.margin = "7px";
+            }
         })
     </script>
 </body>

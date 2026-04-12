@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <title>PrimePudu | LaTeX</title>
+    <meta name="keywords" content="Math, Free, Pudu, Prime, PrimePudu, Primes, Pudus, Learn, Friendly, Fun, Learning, Latex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2b76e0">
+</head>
+
+<body class="writeTab">
+    <div id="mainContentDiv">
+        <h1>LaTeX Editor Tool</h1>
+        <p>Preview for LaTeX code in PrimePudu lessons.</p>
+        <div id="textDiv">
+            <div id="textareaOptionsDiv">
+                <button class="textareaOptionButton" onclick="copyTextarea()">Copy Text</button>
+                <!--
+                <p>Size:</p>
+                <input id="sizeSlider" type="range" min="1" max="10">
+                -->
+                <input id="autoResize" type="checkbox" style="width: 30px;" checked="true">
+                <p>Auto resize</p>
+            </div>
+            <textarea spellcheck="false" id="writeTextarea"></textarea>
+        </div><br>
+        <button style="margin: 40px; margin-top: 0px;" onclick="replaceContent()">Preview</button>
+        <div id="content"></div>
+    </div>
+    <script src="../master.js"></script>
+    <script>
+        orderHeader(1);
+
+        const textarea = document.getElementById("mainContentDiv").getElementsByTagName("textarea")[0];
+        const autoResize = document.getElementById("autoResize");
+        const content = document.getElementById("content");
+        if (localStorage.getItem("latexMemory")) {
+            textarea.value = localStorage.getItem("latexMemory");
+            replaceContent();
+        }
+
+        async function replaceContent() {
+            localStorage.setItem("latexMemory", textarea.value);
+            if (!autoResize.checked) {
+                content.innerHTML = "$$" + textarea.value + "$$";
+            } else {
+                content.innerHTML = "$$ \\Huge" + textarea.value + "$$";
+            }
+            
+            //window.MathJax.svg.scale = 2;
+            await MathJax.typesetPromise([content]);
+        }
+
+        async function copyTextarea() {
+            await navigator.clipboard.writeText(String(textarea.value))
+        }
+
+        textarea.addEventListener("input", function () {
+            const cursorPos = textarea.selectionStart;
+            if (textarea.value[cursorPos - 1] == '"') {
+                textarea.value = textarea.value.slice(0, cursorPos) + '"' + textarea.value.slice(cursorPos, textarea.value.length);
+            } else if (textarea.value[cursorPos - 1] == '(') {
+                textarea.value = textarea.value.slice(0, cursorPos) + ')' + textarea.value.slice(cursorPos, textarea.value.length);
+            } else if (textarea.value[cursorPos - 1] == '{') {
+                textarea.value = textarea.value.slice(0, cursorPos) + '}' + textarea.value.slice(cursorPos, textarea.value.length);
+            }
+            textarea.setSelectionRange(textarea.value.length - textarea.value.slice(cursorPos, textarea.value.length).length, textarea.value.length - textarea.value.slice(cursorPos, textarea.value.length).length);
+        })
+
+        autoResize.addEventListener("change", async function(){
+            replaceContent();
+        })
+    </script>
+</body>
+
+</html>
