@@ -34,5 +34,29 @@
             ["quizset0028", "quizset0029", "quizset002a", "quizset002b"],
             ["quizset002c", "quizset002d", "quizset002e", "quizset002f"]
         ]
+    },
+    "section003": {
+        "name": "Scientific Notation",
+        "desc": "This section introduces scientific notation, some of its uses and how to calculate things including it.",
+        "lessonstheme": "scientific-notation",
+        "color": [255, 102, 255],
+        "quizzes": [
+            ["quizset0030", "quizset0031", "quizset0032", "quizset0033"],
+            ["quizset0034", "quizset0035", "quizset0036", "quizset0037"],
+            ["quizset0038", "quizset0039", "quizset003a", "quizset003b"],
+            ["quizset003c", "quizset003d", "quizset003e", "quizset003f"]
+        ]
+    },
+    "section004": {
+        "name": "Addition",
+        "desc": "This section introduces addition, some of its uses and how to calculate things including it.",
+        "lessonstheme": "",
+        "color": [219, 84, 976],
+        "quizzes": [
+            ["quizset0020", "quizset0021", "quizset0022", "quizset0023"],
+            ["quizset0024", "quizset0025", "quizset0026", "quizset0027"],
+            ["quizset0028", "quizset0029", "quizset002a", "quizset002b"],
+            ["quizset002c", "quizset002d", "quizset002e", "quizset002f"]
+        ]
     }
 }

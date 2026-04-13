@@ -98,23 +98,181 @@
             function getColorStep(end, index, maxIndex) {
                 return ((end - 156) / maxIndex) * index + 156
             }
+            function initSection(sectionName) {
+                Section = sections[sectionName];
+                if (Object.keys(account.progress.individualSections).includes(sectionName)) {
+                    const tr = Section.color;
+                    UsableColor = `rgb(${Math.min(tr[0], 255)}, ${Math.min(tr[1], 255)}, ${Math.min(tr[2], 255)})`;
+                    LightColor = `rgb(${Math.min(tr[0] + 16, 255)}, ${Math.min(tr[1] + 16, 255)}, ${Math.min(tr[2] + 16, 255)})`;;
+                    ColorList = [];
+                    for (let i = 0; i < 5; i++) {
+                        function gcs(a, b, c) { return getColorStep(a, b, c) }
+                        ColorList.push(`rgb(${gcs(tr[0], i, 4)}, ${gcs(tr[1], i, 4)}, ${gcs(tr[2], i, 4)})`);
+                    }
+                } else if (!account.progress.completed.includes(sectionName)) {
+                    UsableColor = "#999999";
+                    LightColor = "#999999";
+                    ColorList = ["#999999", "", "", "", ""];
+                } else {
+                    UsableColor = "#f2d200";
+                    LightColor = "#e6c600";
+                }
+            }
+
+            var Section, UsableColor, ColorList, LightColor;
             Object.keys(sections).forEach(sectionName => {
-                if (!account.progress.completed.includes(sectionName)) {
-                    const section = sections[sectionName]
-                    if (Object.keys(account.progress.individualSections).includes(sectionName)) {
-                        const tr = section.color;
-                        var usableColor = `rgb(${Math.min(tr[0], 255)}, ${Math.min(tr[1], 255)}, ${Math.min(tr[2], 255)})`;
-                        var lightColor = `rgb(${Math.min(tr[0] + 16, 255)}, ${Math.min(tr[1] + 16, 255)}, ${Math.min(tr[2] + 16, 255)})`;;
-                        var colorList = [];
-                        for (let i = 0; i < 5; i++) {
-                            function gcs(a, b, c) { return getColorStep(a, b, c) }
-                            colorList.push(`rgb(${gcs(tr[0], i, 4)}, ${gcs(tr[1], i, 4)}, ${gcs(tr[2], i, 4)})`);
-                        }
-                    } else {
-                        var usableColor = "#999999";
-                        var colorList = ["#999999", "", "", "", ""];
+                if (Object.keys(account.progress.individualSections).includes(sectionName)) {
+                    initSection(sectionName);
+                    //let section = Section; let usableColor = UsableColor; let colorList = ColorList; let lightColor = LightColor;
+                    let [section, usableColor, colorList, lightColor] = [Section, UsableColor, ColorList, LightColor];
+
+                    const sectionDiv = document.createElement("div");
+                    sectionDiv.id = sectionName;
+                    sectionDiv.className = "section";
+                    if (index == 0) {
+                        sectionDiv.style.paddingTop = "0px";
+                    }
+                    if (Object.keys(sections).indexOf(sectionName) == Object.keys(sections).length - 1 && account.progress.completed.length == 0) {
+                        sectionDiv.style.borderBottom = "0px";
                     }
 
+                    const descDiv = document.createElement("div");
+                    descDiv.id = "sectionDesc";
+                    if (Object.keys(account.progress.individualSections).includes(sectionName)) {
+                        if (section.lessonstheme != "") {
+                            descDiv.onclick = () => { window.location.href = "../learn/?lesson=" + section.lessonstheme; }
+                        }
+                    } else {
+                        descDiv.onclick = () => {
+                            if (Object.keys(account.progress.individualSections).length > 0) {
+                                toggleWarning(0);
+                                const ul = document.getElementById("opt0").getElementsByTagName("ul")[0];
+                                ul.innerHTML = "";
+                                if (Object.keys(account.progress.individualSections).length < 5) {
+                                    for (let i = 0; i < Object.keys(account.progress.individualSections).length; i++) {
+                                        const li = document.createElement("li");
+                                        li.textContent = sections[Object.keys(account.progress.individualSections)[i]].name;
+                                        ul.appendChild(li);
+                                    }
+                                } else {
+                                    for (let i = 0; i < 3; i++) {
+                                        const li = document.createElement("li");
+                                        li.textContent = sections[Object.keys(account.progress.individualSections)[i]].name;
+                                        ul.appendChild(li);
+                                    }
+                                    const li = document.createElement("li");
+                                    li.textContent = `And ${Object.keys(account.progress.individualSections).length - 3} more`;
+                                    ul.appendChild(li);
+                                }
+                                const opt = document.getElementById("opt0").getElementsByClassName("warningButtons")[0];
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(0) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
+
+                                document.getElementById("confQuestion").textContent = `Do you still want to learn the section: ${section.name}?`
+                            } else {
+                                toggleWarning(1);
+                                const opt = document.getElementById("opt1").getElementsByClassName("warningButtons")[0];
+                                opt.getElementsByTagName("p")[0].onclick = () => { toggleWarning(1) };
+                                opt.getElementsByTagName("p")[1].onclick = () => { startLearningSection(sectionName) };
+                            }
+                        }
+                    }
+
+                    descDiv.innerHTML = `<h1>${section.name}</h1><p>${section.desc}</p>`;
+                    descDiv.style.backgroundColor = usableColor;
+                    descDiv.addEventListener("mouseover", function () {
+                        descDiv.style.backgroundColor = lightColor;
+                    })
+                    descDiv.addEventListener("mouseleave", function () {
+                        descDiv.style.backgroundColor = usableColor;
+                    })
+                    sectionDiv.appendChild(descDiv);
+
+                    const quizzesDiv = document.createElement("div");
+                    quizzesDiv.id = "sectionGroup";
+                    const figures = ["sigma", "x", "reals", "pi"]
+                    let lowest = 0;
+                    for (let i = 0; i < 4; i++) {
+                        const div = document.createElement("div");
+                        if (account.progress.individualSections[sectionName]) {
+                            div.style.backgroundColor = colorList[account.progress.individualSections[sectionName][i]];
+                            if (account.progress.individualSections[sectionName][i] < account.progress.individualSections[sectionName][lowest]) {
+                                lowest = i;
+                            }
+                        } else {
+                            div.style.backgroundColor = usableColor;
+                        }
+                        const img = document.createElement("img");
+                        img.src = `../images/${figures[i % figures.length]}.png`;
+                        img.style.userSelect = "none";
+                        img.style.webkitUserDrag = "none";
+                        div.appendChild(img);
+
+                        div.addEventListener("mouseover", function () {
+                            div.style.backgroundColor = usableColor;
+                        })
+                        div.addEventListener("mouseleave", function () {
+                            if (account.progress.individualSections[sectionName]) {
+                                div.style.backgroundColor = colorList[account.progress.individualSections[sectionName][i]];
+                            } else {
+                                div.style.backgroundColor = usableColor;
+                            }
+                        })
+
+                        if (account.progress.individualSections[sectionName] && account.progress.individualSections[sectionName][i] != 4) {
+                            div.addEventListener("click", function () {
+                                window.location.href = `../lesson/?quiz=${sections[sectionName].quizzes[i][account.progress.individualSections[sectionName][i]]}`;
+                            })
+                        }
+                        quizzesDiv.appendChild(div);
+                    }
+                    sectionDiv.appendChild(quizzesDiv);
+
+                    const testDiv = document.createElement("div");
+                    testDiv.id = "sectionQuiz";
+                    testDiv.innerHTML = `Take the quiz for: ${section.name}`;
+                    if (account.progress.individualSections[sectionName]) {
+                        testDiv.style.backgroundColor = colorList[account.progress.individualSections[sectionName][lowest]];
+                    } else {
+                        testDiv.style.backgroundColor = usableColor;
+                    }
+                    testDiv.addEventListener("mouseover", function () {
+                        let proceed = true;
+                        for (let i = 0; i < 4; i++) {
+                            if (account.progress.individualSections[sectionName][i] != 4) {
+                                proceed = false;
+                                break;
+                            }
+                        }
+                        if (proceed) {
+                            testDiv.style.cursor = "pointer";
+                            testDiv.style.backgroundColor = lightColor;
+                            testDiv.addEventListener("click", function () {
+                                window.location.href = "../test/?section=" + sectionName;
+                            })
+                        } else {
+                            testDiv.style.cursor = "not-allowed"
+                        }
+
+                    })
+                    testDiv.addEventListener("mouseleave", function () {
+                        if (account.progress.individualSections[sectionName]) {
+                            testDiv.style.backgroundColor = colorList[account.progress.individualSections[sectionName][lowest]];
+                        } else {
+                            testDiv.style.backgroundColor = usableColor;
+                        }
+                    })
+                    sectionDiv.appendChild(testDiv);
+
+                    sectionsDiv.appendChild(sectionDiv);
+
+                    index++;
+                }
+            })
+            Object.keys(sections).forEach(sectionName => {
+                if (!Object.keys(account.progress.individualSections).includes(sectionName) && !account.progress.completed.includes(sectionName)) {
+                    initSection(sectionName);
+                    let section = Section; let usableColor = UsableColor; let colorList = ColorList; let lightColor = LightColor;
 
                     const sectionDiv = document.createElement("div");
                     sectionDiv.id = sectionName;
@@ -261,10 +419,8 @@
             })
             Object.keys(sections).forEach(sectionName => {
                 if (account.progress.completed.includes(sectionName)) {
-                    const section = sections[sectionName]
-
-                    var usableColor = "#f2d200";
-                    var lightColor = "#e6c600";
+                    initSection(sectionName);
+                    let section = Section; let usableColor = UsableColor; let colorList = ColorList; let lightColor = LightColor;
 
                     const sectionDiv = document.createElement("div");
                     sectionDiv.id = sectionName;

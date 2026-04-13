@@ -137,6 +137,7 @@
                     }
                 }
 
+                // Get the Section Name of the Lessons Section
                 async function getSNLesson(quizName) {
                     const response = await fetch("../learnway/sections.json");
                     const sections = await response.json();
@@ -157,12 +158,12 @@
                         }
                     }
                     
-                    // Optional: Return null or throw an error if no match found
                     return null;
                 }
 
-                information.innerHTML = quiz[question][0]
-                showOnly(translate(quiz[question][1]))
+                information.innerHTML = quiz[question][0];
+                MathJax.typesetPromise([information]);
+                showOnly(translate(quiz[question][1]));
 
                 checkbutton.addEventListener("click", function(){
                     if (!clickableCheckbutton) return;
@@ -180,6 +181,7 @@
                                 
                                 if (question < 10) {
                                     information.innerHTML = quiz[question][0]
+                                    MathJax.typesetPromise([information]);
                                     showOnly(translate(quiz[question][1]))
                                     instantLessonForm.getElementsByTagName(translate(quiz[question][1]))[0].value = "";
 

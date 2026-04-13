@@ -51,7 +51,9 @@
         }
 
         async function copyTextarea() {
-            await navigator.clipboard.writeText(String(textarea.value))
+            let singleLineText = textarea.value.replace(/\n/g, ' ');
+            const escapedText = singleLineText.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+            await navigator.clipboard.writeText(escapedText);
         }
 
         textarea.addEventListener("input", function () {
@@ -75,9 +77,10 @@
                 } catch { }
             } else if (textarea.value[cursorPos - 1] == '"') {
                 textarea.value = textarea.value.slice(0, cursorPos) + '"' + textarea.value.slice(cursorPos, textarea.value.length);
-            }
-            else if (textarea.value[cursorPos - 1] == '(') {
+            } else if (textarea.value[cursorPos - 1] == '(') {
                 textarea.value = textarea.value.slice(0, cursorPos) + ')' + textarea.value.slice(cursorPos, textarea.value.length);
+            } else if (textarea.value[cursorPos - 1] == '{') {
+                textarea.value = textarea.value.slice(0, cursorPos) + '}' + textarea.value.slice(cursorPos, textarea.value.length);
             }
             textarea.setSelectionRange(textarea.value.length - textarea.value.slice(cursorPos, textarea.value.length).length, textarea.value.length - textarea.value.slice(cursorPos, textarea.value.length).length);
         })
