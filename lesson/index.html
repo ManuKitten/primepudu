@@ -167,7 +167,7 @@
 
                 checkbutton.addEventListener("click", function(){
                     if (!clickableCheckbutton) return;
-                    if (quiz[question][2] == textarea.value) {
+                    if (quiz[question][2].replace(/ /g, '') == textarea.value.replace(/ /g, '')) {
                         clickableCheckbutton = false;
                         checkbutton.style.backgroundColor = "33cc33";
                         checkbutton.textContent = "Correct";
